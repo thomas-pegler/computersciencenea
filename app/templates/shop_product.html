@@ -1,0 +1,51 @@
+{% extends "shop_pagebase.html" %}
+
+{% block pagecontent %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class="notification {{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endwith %}
+
+<section>
+    <div class="container is-fluid">
+        <section class="section">
+            <div class="container">
+                <div class="columns is-desktop is-vcentered">
+                    <div class="column is-6-desktop">
+                        <h2 class="title">{{ product.name }}</h2>
+                        <p class="subtitle">£{{ product.price }}</p>
+                        <div class="tabs">
+                            <ul>
+                                <li class="is-active"><a href="#">Description</a></li>
+                            </ul>
+                        </div>
+                        <p class="subtitle">{{ product.shortdesc }}</p>
+                        <p class="detail">{{ product.longdesc }}</p>
+                        <div class="hero-body">
+                        </div>
+                        <form method="POST" action="/shop/product/{{ product.id }}">
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input" type="integer" name="quantity" placeholder="Enter Quantity" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control is-expanded">
+                                    <button class="button is-success">Add to basket</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="column is-6-desktop is-center"><img src="/static/Shop Images/{{ product.mainimage }}" width="50%" height="auto"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+{% endblock %}
+
+

@@ -1,0 +1,87 @@
+{% extends "admin_pagebase.html" %}
+  
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    <span>
+                        User Manager
+                    </span>
+                    <span>
+                        <a class="button is-success is-pulled-right" href={{ url_for('admin.adduser') }}>Add New</a>
+                    </span>
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+        <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        User Search
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="control has-icons-right">
+                            <input class="input is-medium" type="integer" placeholder="Enter user ID">
+                            <span class="icon is-medium is-right">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    <section>
+        <table class="table is-fullwidth">
+            <thead>
+            <tr>
+                <th class="has-text-centered" scope="col">User ID</th>
+                <th class="has-text-centered" scope="col">First Name</th>
+                <th class="has-text-centered" scope="col">Last Name</th>
+                <th class="has-text-centered" scope="col">Email</th>
+                <th class="has-text-centered" scope="col">Status</th>
+                <th class="has-text-centered" scope="col"></th>
+                <th class="has-text-centered" scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+            <tr>
+                <td class="has-text-centered">User #{{ user.id }}</td>
+                <td class="has-text-centered">{{ user.firstname }}</td>
+                <td class="has-text-centered">{{ user.lastname }}</td>
+                <td class="has-text-centered">{{ user.email }}</td>
+                <td class="has-text-centered">{% if user.isadmin %}Admin{% endif %}{% if not user.isadmin %}User{% endif %}</td>
+                <td></td>
+                <td class="has-text-centered"><a class="button is-small is-success" href={{ url_for('admin.manageuser', user_id=user.id) }}>Manage</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+{% endblock %}

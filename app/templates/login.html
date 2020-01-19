@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero is-primary">
+    <div class="hero-body has-text-centered has-background-link">
+        <div class="container">
+            <h1 class="title">
+                Login
+            </h1>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-primary has-background-white">
+    <div class="column is-4 is-offset-4">
+        <div class="box has-background-grey-dark">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% for category, message in messages %}
+                  <div class="notification {{ category }}">{{ message }}</div>
+              {% endfor %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('auth.login', next=request.args.get("next")) }}">
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <input class="input is-large" type="email" name="email" placeholder="Your email">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <input class="input is-large" type="password" name="password" placeholder="Your password">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                        <label class="checkbox has-text-white">
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+                </div>
+                <button class="button is-block is-large is-fullwidth is-success">Login</button>
+            </form>
+            <div class="field">
+                <div class="control">
+                    <label>
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control has-text-centered">
+                    <label>
+                        <a class="has-text-white" href="{{ url_for("auth.passresetrequest") }}">Forgotten your password?</a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

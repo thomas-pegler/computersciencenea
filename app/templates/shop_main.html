@@ -1,0 +1,35 @@
+{% extends "shop_pagebase.html" %}
+
+{% block pagecontent %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class="notification {{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endwith %}
+
+<section>
+    <div class="container has-text-centered">
+        <div class="columns">
+            {% for product in products %}
+            <div class="column"><a href={{ url_for('shop.products', product_id=product.id) }}>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-image is-vcentered"><img src="/static/Shop Images/{{ product.mainimage }}" width="50%" height="auto"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="title is-4">{{ product.name}}</h3>
+                        <p class="subtitle is-3">£{{ product.price }}</p>
+                    </div>
+                </div></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="hero is-small">
+        <div class="hero-body">
+        </div>
+</section>
+
+{% endblock %}

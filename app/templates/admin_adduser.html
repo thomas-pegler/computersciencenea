@@ -1,0 +1,65 @@
+{% extends "admin_pagebase.html" %}
+
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Add User
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+        <form method="POST" action="/usermanager/add">
+                <div class="field">
+                    <label class="label">Email</label>
+                    <div class="control">
+                        <input class="input" type="email" name="email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">First Name</label>
+                    <div class="control">
+                        <input class="input" type="text" name="firstname">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Last Name</label>
+                    <div class="control">
+                        <input class="input" type="text" name="lastname">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" type="password" name="password" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <label class="label">Admin Access</label>
+                        <input type="checkbox" name="isadmin">
+                    </div>
+                </div>
+                <hr>
+                <button class="button is-success is-medium is-fullwidth">Add User</button>
+            </form>
+    </section>
+</div>
+    
+{% endblock %}

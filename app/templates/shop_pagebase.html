@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero is-primary">
+    <div class="hero-body has-text-centered has-background-link">
+        <div class="container">
+            <h1 class="title">
+                Shop
+            </h1>
+            <h2 class="subtitle">
+            </h2>
+        </div>
+    </div>
+</section>
+
+<div class="tabs">
+    <ul>
+        <li class="is-active">
+            <a href="{{ url_for('shop.shop_main') }}">
+                <span class="icon">
+                    <i class="fa fa-shopping-cart"></i>
+                </span>
+                <span>Shop</span>
+            </a>
+        </li>
+        {% if not current_user.isadmin %}
+        <li>
+            <a href="{{ url_for('shop.basket') }}">
+                <span class="icon">
+                    <i class="fa fa-shopping-basket"></i>
+                </span>
+                <span>Basket</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url_for('shop.checkout') }}">
+                <span class="icon">
+                    <i class="fa fa-shopping-bag"></i>
+                </span>
+                <span>Checkout</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    <ul class="is-right">
+        <li>
+            <form method="POST" action="/shop/search">
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input is-small" type="text" name="searchterm" placeholder="Search for item">
+                </div>
+                <div class="control" type="submit">
+                    <a class="button is-small">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </div>
+            </div>
+            </form>
+        </li>
+        <li>
+            <div>
+
+            </div>
+        </li>
+    </ul>
+</div>
+
+{% block pagecontent %}
+{% endblock %}
+
+{% endblock %}

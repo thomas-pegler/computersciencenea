@@ -1,0 +1,78 @@
+{% extends "admin_pagebase.html" %}
+
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Stock Levels
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+        <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Product Search
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="control has-icons-right">
+                            <input class="input is-medium" type="integer" placeholder="Enter product ID">
+                            <span class="icon is-medium is-right">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    <section>
+        <table class="table is-fullwidth">
+            <thead>
+            <tr>
+                <th class="has-text-centered" scope="col">Product ID</th>
+                <th class="has-text-centered" scope="col">Name</th>
+                <th class="has-text-centered" scope="col">Description</th>
+                <th class="has-text-centered" scope="col">Price</th>
+                <th class="has-text-centered" scope="col">Stock Level</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+            <tr>
+                <td class="has-text-centered">Product #{{ product.id }}</td>
+                <td class="has-text-centered">{{ product.name }}</td>
+                <td class="has-text-centered">{{ product.shortdesc }}</td>
+                <td class="has-text-centered">£{{ product.price }}</td>
+                <td class="has-text-centered"><progress class="progress is-small is-success is-centered" value={{ product.stock }} max="100">{{ product.stock }}%</progress></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+{% endblock %}

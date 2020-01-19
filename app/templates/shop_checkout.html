@@ -1,0 +1,158 @@
+{% extends "user_pagebase.html" %}
+
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Checkout
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-7">
+                        <h4 class="title is-4">Billing Address</h4>
+                        <form method="POST" action="/checkout">
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <div class="field">
+                                        <label class="label">First name</label>
+                                        <div class="control">
+                                            <input class="input" type="text" value="{{ current_user.firstname }}" name="firstname" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control is-expanded">
+                                    <div class="field">
+                                        <label class="label">Last name</label>
+                                        <div class="control">
+                                            <input class="input" type="text" value="{{ current_user.lastname }}" name="lastname" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Address Line 1</label>
+                                <div class="control">
+                                    <input class="input" type="text" {% if current_user.address_line1 != None %}value="{{ current_user.address_line1 }}"{% endif %} name="address1" placeholder="1234 Main St" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Address Line 2</label>
+                                <div class="control">
+                                    <input class="input" type="text" {% if current_user.address_line2 != None %}value="{{ current_user.address_line2 }}"{% endif %} name="address2" placeholder="Apartment or suite">
+                                </div>
+                            </div>
+                            <div class="field is-grouped">
+                                <div class="control is-expanded">
+                                    <div class="field">
+                                        <label class="label">Town/City</label>
+                                        <div class="control">
+                                            <input class="input" type="text" {% if current_user.address_city != None %}value="{{ current_user.address_city }}"{% endif %} name="city">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control is-expanded">
+                                    <div class="field">
+                                        <label class="label">County</label>
+                                        <div class="control">
+                                            <input class="input" type="text" {% if current_user.address_county != None %}value="{{ current_user.address_county }}"{% endif %} name="county">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div class="field">
+                                        <div class="label">Postcode</div>
+                                        <div class="control">
+                                            <input class="input" type="text" {% if current_user.address_postcode != None %}value="{{ current_user.address_postcode }}"{% endif %} name="postcode" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <button class="button is-success is-fullwidth" type="submit">Confirm Order</button>
+                        </form>
+                    </div>
+                    <div class="column is-5">
+                        <h4 class="title is-4">
+                            <span>
+                                Your Basket
+                            </span>
+                            <span class="tag is-small is-success is-pulled-right">
+                                {{ items }}
+                            </span>
+                        </h4>
+                        <div class="list">
+                            {% for item in basket %}
+                            <a class="list-item" href={{ url_for('shop.products', product_id=item.basketproduct.id )}}>
+                                <div class="level is-mobile">
+                                    <div>
+                                        <h6 class="is-4">
+                                            <span class="tag is-small is-success is-pulled-left">
+                                                {{ item.quantity }}
+                                            </span>
+                                        </h6>
+                                    </div>
+                                    <div class="level-left">
+                                        <div class="level-item">
+                                            <div>
+                                                <h6>{{ item.basketproduct.name }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="level-right">
+                                        <div>
+                                            <h6>£{{ item.basketproduct.price }}</h6>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="title is-4">
+                                            <form method="POST" action="/checkout/editbasket/{{ item.basketproduct.id }}">
+                                                <button class="button is-small is-danger is-pulled-left" type="submit"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        <hr>
+                        <div>
+                            <h4 class="title is-5">
+                                <span>
+                                    <strong>Order Total</strong>
+                                </span>
+                                <span class="is-pulled-right">
+                                    <strong>£{{ totalprice }}</strong>
+                                </span>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero is-small">
+    <div class="hero-body">
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3">
+                <aside>
+                    <p class="menu-label">
+                        General
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('admin.dashboard') }}" {% if request.path == '/dashboard' %}class="is-active"{% endif %}>Dashboard</a></li>
+                        <li><a href="{{ url_for('main.profile') }}" {% if request.path == '/profile' %}class="is-active"{% endif %}>Profile</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Administration
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('admin.usermanager') }}" {% if 'usermanager' in request.path %}class="is-active"{% endif %}>Users</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        WMS
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('admin.ordermanager') }}" {% if 'ordermanager' in request.path %}class="is-active"{% endif %}>Orders</a></li>
+                        <li><a href="{{ url_for('admin.productmanager') }}" {% if 'productmanager' in request.path %}class="is-active"{% endif %}>Products</a></li>
+                        <li><a href="{{ url_for('admin.stocklevels') }}" {% if request.path == '/stocklevels' %}class="is-active"{% endif %}>Stock Levels</a></li>
+                    </ul>
+                </aside>
+            </div>
+                {% block pagecontent %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-small">
+    <div class="hero-body">
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "user_pagebase.html" %}
+
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Your Profile
+                </h1>
+                <h2 class="subtitle">
+                    Welcome to your profile page, <strong>{{ current_user.firstname }}</strong>.
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+        <form method="POST" action="/profile/edit" enctype="multipart/form-data">
+            <div class="field">
+                <label class="label">First Name</label>
+                <div class="control">
+                    <input class="input" type="text" value="{{ current_user.firstname }}" name="firstname" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control">
+                    <input class="input" type="text" value="{{ current_user.lastname }}" name="lastname" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control">
+                    <input class="input" type="email" value="{{ current_user.email }}" name="email" disabled>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input class="input" type="password" type="text" name="password" placeholder="Your password" required>
+                </div>
+            </div>
+            <hr>
+            <div class="field">
+                <label class="label">Address Line 1</label>
+                <div class="control">
+                    <input class="input" type="text" {% if current_user.address_line1 != None %}value="{{ current_user.address_line1 }}"{% endif %} name="address1" placeholder="1234 Main St">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Address Line 2</label>
+                <div class="control">
+                    <input class="input" type="text" {% if current_user.address_line2 != None %}value="{{ current_user.address_line2 }}"{% endif %} name="address2" placeholder="Apartment or suite">
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control is-expanded">
+                    <div class="field">
+                        <label class="label">Town/City</label>
+                        <div class="control">
+                            <input class="input" type="text" {% if current_user.address_city != None %}value="{{ current_user.address_city }}"{% endif %} name="city">
+                        </div>
+                    </div>
+                </div>
+                <div class="control is-expanded">
+                    <div class="field">
+                        <label class="label">County</label>
+                        <div class="control">
+                            <input class="input" type="text" {% if current_user.address_county != None %}value="{{ current_user.address_county }}"{% endif %} name="county">
+                        </div>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="field">
+                        <div class="label">Postcode</div>
+                        <div class="control">
+                            <input class="input" type="text" {% if current_user.address_postcode != None %}value="{{ current_user.address_postcode }}"{% endif %} name="postcode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="columns">
+                <div class="column">
+                    <button class="button is-success is-medium is-fullwidth is-11" type="submit">Confirm Changes</button>
+                </div>
+        </form>
+                <div class="column">
+                    <form method="POST" action="/profile/delete">
+                            <button class="button is-medium is-fullwidth is-danger is-1" type="submit"><i class="fa fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+</div>
+
+{% endblock %}

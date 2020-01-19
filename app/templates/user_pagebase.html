@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero is-small">
+    <div class="hero-body">
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3 ">
+                <aside>
+                    <p class="menu-label">
+                        General
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('main.profile') }}" {% if request.path == '/profile' %}class="is-active"{% endif %}>Profile</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        WMS
+                    </p>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('shop.orders') }}" {% if 'orders' in request.path %}class="is-active"{% endif %}>Orders</a></li>
+                    </ul>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('shop.basket') }}" {% if request.path == '/basket' %}class="is-active"{% endif %}>Basket</a></li>
+                    </ul>
+                    <ul class="menu-list">
+                        <li><a href="{{ url_for('shop.checkout') }}" {% if request.path == '/checkout' %}class="is-active"{% endif %}>Checkout</a></li>
+                    </ul>
+                </aside>
+            </div>
+                {% block pagecontent %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-small">
+    <div class="hero-body">
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "admin_pagebase.html" %}
+
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Manage Product
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+        <form method="POST" action="/productmanager/{{ product.id }}" enctype="multipart/form-data">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input class="input" value="{{ product.name }}" type="text" name="productname" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Short Description</label>
+                <div class="control">
+                    <input class="input" value="{{ product.shortdesc }}" type="text" name="shortdesc" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Long Description</label>
+                <div class="control">
+                    <input class="input" value="{{ product.longdesc }}" type="text" name="longdesc" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Price</label>
+                <div class="control">
+                    <input class="input" value="{{ product.price }}" type="integer" name="price" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Stock</label>
+                <div class="control">
+                    <input class="input" value="{{ product.stock }}" type="integer" name="stock" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Photo</label>
+                <div>
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fa fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            <input type="file" name="mainimage">
+                        </span>
+                    </span>
+                </div>
+            </div>
+            {% if product.archived == False %}
+            <hr>
+            <div class="columns">
+                <div class="column">
+                    <button class="button is-success is-medium is-fullwidth is-11" type="submit">Confirm Changes</button>
+                </div>
+        </form>
+                <div class="column">
+                    <form method="POST" action="/productmanager/archive/{{ product.id }}">
+                            <button class="button is-medium is-fullwidth is-danger is-1" type="submit"><i class="fa fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            {% if product.archived == True %}
+            <div class="field">
+                <div class="control">
+                    <label class="label">Archived</label>
+                    <input type="checkbox" name="archived" {% if product.archived %}checked="checked"{% endif %}>
+                </div>
+            </div>
+            <hr>
+            <div class="column">
+                <div class="column">
+                    <button class="button is-success is-medium is-fullwidth" type="submit">Confirm Changes</button>
+                </div>
+            </div>
+            {% endif %}
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+</div>
+
+{% endblock %}

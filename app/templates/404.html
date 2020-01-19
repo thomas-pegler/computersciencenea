@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero is-primary is-fullheight is-medium">
+    <div class="hero-body has-text-centered has-background-link">
+        <div class="container is-fluid">
+            <div class="container has-text-centered">
+                <div class="columns is-centered">
+                    <div class="column is-7">
+                        <h1 class="title is-1">404</h1>
+                        <p class="subtitle is-3">Page not found</p>
+                    </div>
+                </div><a class="button is-success" href="{{ url_for("main.index") }}">Go to the homepage</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "admin_pagebase.html" %}
+
+{% block pagecontent %}
+
+<div class="column is-9">
+    <section class="hero is-link welcome is-small">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Add Product
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-small">
+        <div class="hero-body">
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="notification {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section>
+        <form method="POST" action="/productmanager/add" enctype="multipart/form-data">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="productname" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Short Description</label>
+                <div class="control">
+                    <input class="input" type="text" name="shortdesc" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Long Description</label>
+                <div class="control">
+                    <textarea class="textarea input" type="text" name="longdesc" rows="5" required></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Price</label>
+                <div class="control">
+                    <input class="input" type="integer" name="price" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Stock</label>
+                <div class="control">
+                    <input class="input" type="integer" name="stock" required>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Photo</label>
+                <div>
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fa fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            <input type="file" name="mainimage">
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <hr>
+            <button class="button is-success is-medium is-fullwidth" type="submit">Add Product</button>
+        </form>
+    </section>
+</div>
+    
+{% endblock %}

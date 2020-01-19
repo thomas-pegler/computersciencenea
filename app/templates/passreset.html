@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero is-primary">
+    <div class="hero-body has-text-centered has-background-link">
+        <div class="container">
+            <h1 class="title">
+                Password Reset
+            </h1>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-primary has-background-white">
+    <div class="column is-4 is-offset-4">
+        <div class="box has-background-grey-dark">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% for category, message in messages %}
+                  <div class="notification {{ category }}">{{ message }}</div>
+              {% endfor %}
+            {% endwith %}
+            <form method="POST" action="/passreset/{{ key }}">
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <input class="input is-large" type="password" name="password1" placeholder="New password">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <input class="input is-large" type="password" name="password2" placeholder="Repeat new password">
+                        <span class="icon is-small is-left">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <button class="button is-block is-info is-large is-fullwidth is-success">Reset</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
